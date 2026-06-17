@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Meta Tags -->
+    <title>Meu IP e Fingerprint | Verifique seus Dados de Navegação</title>
+    <meta name="description" content="Ferramenta gratuita para descobrir seu endereço IP, Hash de Fingerprint, User-Agent, tipo de navegador e sistema operacional em tempo real.">
+    <meta name="keywords" content="meu ip, verificar fingerprint, user agent, resolução de tela, navegador, sistema operacional, rastreamento">
+    
+    <!-- Tailwind CSS (Framework de Estilização) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome (Ícones) e Google Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <!-- Configuração customizada de design -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: { primary: '#2563eb', secondary: '#1e40af', dark: '#0f172a' }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #f8fafc; color: #334155; }
+        /* Estilo para os placeholders de anúncios */
+        .ad-space {
+            background: repeating-linear-gradient(45deg, #f1f5f9, #f1f5f9 10px, #e2e8f0 10px, #e2e8f0 20px);
+            border: 2px dashed #cbd5e1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #64748b;
+            font-weight: 600;
+            text-align: center;
+            padding: 1rem;
+            border-radius: 0.5rem;
+        }
+        /* Loader suave */
+        .skeleton { animation: pulse 1.5s infinite ease-in-out; background-color: #e2e8f0; border-radius: 0.25rem; }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-2 text-primary">
+                <i class="fa-solid fa-fingerprint text-3xl"></i>
+                <h1 class="text-2xl font-extrabold tracking-tight text-dark">Check<span class="text-primary">IP</span></h1>
+            </div>
+            <nav class="hidden md:flex gap-6 text-sm font-semibold">
+                <a href="#ip" class="hover:text-primary transition">Meu IP</a>
+                <a href="#fingerprint" class="hover:text-primary transition">Fingerprint</a>
+                <a href="#browser" class="hover:text-primary transition">Navegador</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ANÚNCIO TOPO (Banner Horizontal) -->
+    <div class="w-full max-w-7xl mx-auto px-4 mt-6">
+        <div class="ad-space w-full h-[90px] md:h-[120px]">
+            <div>
+                <i class="fa-solid fa-ad text-2xl mb-1"></i>
+                <p class="text-xs md:text-sm">Espaço para Banner de Anúncio (Topo)<br><span class="font-normal text-xs">Cole o script do AdSense aqui</span></p>
+            </div>
+        </div>
+    </div>
+
+    <main class="flex-grow max-w-7xl mx-auto w-full px-4 py-8 grid grid-cols-1 lg:grid-cols-12 gap-6">
+        
+        <!-- COLUNA ESQUERDA - ANÚNCIOS (Oculta em telas pequenas) -->
+        <aside class="hidden lg:flex flex-col gap-6 col-span-2">
+            <div class="ad-space h-[600px] sticky top-24">
+                <div>
+                    <i class="fa-solid fa-ad text-2xl mb-1"></i>
+                    <p class="text-xs">Arranha-céu Esquerdo<br>(160x600)</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- ÁREA CENTRAL - CONTEÚDO PRINCIPAL -->
+        <section class="col-span-1 lg:col-span-8 flex flex-col gap-6">
+            
+            <!-- CARD: MEU IP -->
+            <div id="ip" class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
+                <div class="bg-gradient-to-r from-blue-600 to-indigo-700 p-6 text-white text-center">
+                    <h2 class="text-sm uppercase tracking-widest font-semibold mb-2 opacity-80">Seu Endereço IP Público</h2>
+                    <div id="ip-display" class="text-4xl md:text-6xl font-black tracking-wider break-all flex items-center justify-center gap-3">
+                        <span class="skeleton w-64 h-12 inline-block rounded-lg"></span>
+                    </div>
+                </div>
+                <div class="p-4 bg-gray-50 border-t border-gray-100 flex justify-center">
+                    <button onclick="copyToClipboard('ip-value')" class="text-sm font-semibold text-primary hover:text-indigo-800 transition flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm border border-gray-200">
+                        <i class="fa-regular fa-copy"></i> Copiar IP
+                    </button>
+                </div>
+            </div>
+
+            <!-- ANÚNCIO MEIO DO CONTEÚDO -->
+            <div class="ad-space w-full h-[90px]">
+                <p class="text-xs">Anúncio de Conteúdo (In-article Ad)</p>
+            </div>
+
+            <!-- CARD: FINGERPRINT -->
+            <div id="fingerprint" class="bg-white rounded-2xl shadow-md p-6 border border-gray-100 relative overflow-hidden">
+                <div class="absolute top-0 right-0 p-4 opacity-10">
+                    <i class="fa-solid fa-fingerprint text-8xl"></i>
+                </div>
+                <h3 class="text-xl font-bold text-dark mb-4 flex items-center gap-2 relative z-10">
+                    <i class="fa-solid fa-hashtag text-primary"></i> Hash de Fingerprint
+                </h3>
+                <p class="text-sm text-gray-500 mb-4 relative z-10">Este é um identificador único gerado a partir do seu hardware, canvas HTML5 e configurações do navegador.</p>
+                <div class="bg-gray-100 p-4 rounded-lg border border-gray-200 font-mono text-lg md:text-2xl text-dark break-all relative z-10" id="fingerprint-display">
+                    <span class="skeleton w-full h-8 block"></span>
+                </div>
+            </div>
+
+            <!-- GRID DE DADOS (Navegador e Sistema) -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="browser">
+                <!-- OS Info -->
+                <div class="bg-white rounded-2xl shadow-md p-6 border border-gray-100">
+                    <h3 class="text-sm font-bold text-gray-400 uppercase tracking-wide mb-1">Sistema Operacional</h3>
+                    <div class="text-xl font-bold text-dark flex items-center gap-2 mt-2" id="os-display">
+                        <span class="skeleton w-32 h-6 block"></span>
+                    </div>
+                </div>
+
+                <!-- Browser Info -->
+                <div class="bg-white rounded-2xl shadow-md p-6 border border-gray-100">
+                    <h3 class="text-sm font-bold text-gray-400 uppercase tracking-wide mb-1">Navegador</h3>
+                    <div class="text-xl font-bold text-dark flex items-center gap-2 mt-2" id="browser-display">
+                        <span class="skeleton w-32 h-6 block"></span>
+                    </div>
+                </div>
+
+                <!-- Screen Info -->
+                <div class="bg-white rounded-2xl shadow-md p-6 border border-gray-100">
+                    <h3 class="text-sm font-bold text-gray-400 uppercase tracking-wide mb-1">Resolução de Tela</h3>
+                    <div class="text-xl font-bold text-dark flex items-center gap-2 mt-2" id="screen-display">
+                        <span class="skeleton w-32 h-6 block"></span>
+                    </div>
+                </div>
+
+                <!-- Language Info -->
+                <div class="bg-white rounded-2xl shadow-md p-6 border border-gray-100">
+                    <h3 class="text-sm font-bold text-gray-400 uppercase tracking-wide mb-1">Idioma Padrão</h3>
+                    <div class="text-xl font-bold text-dark flex items-center gap-2 mt-2" id="lang-display">
+                        <span class="skeleton w-32 h-6 block"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- USER AGENT -->
+            <div class="bg-white rounded-2xl shadow-md p-6 border border-gray-100">
+                <h3 class="text-sm font-bold text-gray-400 uppercase tracking-wide mb-3">User-Agent Completo</h3>
+                <div class="bg-gray-800 text-green-400 font-mono text-xs md:text-sm p-4 rounded-lg overflow-x-auto" id="ua-display">
+                    <span class="skeleton w-full h-4 block bg-gray-600 mb-2"></span>
+                    <span class="skeleton w-2/3 h-4 block bg-gray-600"></span>
+                </div>
+            </div>
+
+            <!-- CONTEÚDO PARA SEO (Essencial para o Google rankear e aprovar o AdSense) -->
+            <article class="mt-8 bg-white rounded-2xl p-8 shadow-sm border border-gray-100 text-gray-600 leading-relaxed">
+                <h2 class="text-2xl font-bold text-dark mb-4">O que é um endereço IP?</h2>
+                <p class="mb-6">O endereço IP (Internet Protocol) é um número de identificação exclusivo atribuído a cada dispositivo conectado a uma rede de computadores que utiliza o Protocolo de Internet para comunicação. Ele funciona como um endereço residencial, permitindo que a internet envie os dados corretos para o seu computador ou smartphone.</p>
+                
+                <h2 class="text-2xl font-bold text-dark mb-4">Como funciona o Fingerprint de Navegador?</h2>
+                <p>Ao contrário dos cookies, que podem ser apagados, o <strong>Browser Fingerprinting</strong> (Impressão Digital do Navegador) coleta informações sobre o hardware e software do seu dispositivo (como resolução da tela, fontes instaladas e renderização de canvas 2D/3D). Essas informações formam um "hash" único, sendo usado por empresas de segurança e anúncios para rastrear a navegação do usuário.</p>
+            </article>
+
+        </section>
+
+        <!-- COLUNA DIREITA - ANÚNCIOS (Oculta em telas pequenas) -->
+        <aside class="hidden lg:flex flex-col gap-6 col-span-2">
+            <div class="ad-space h-[600px] sticky top-24">
+                <div>
+                    <i class="fa-solid fa-ad text-2xl mb-1"></i>
+                    <p class="text-xs">Arranha-céu Direito<br>(160x600)</p>
+                </div>
+            </div>
+        </aside>
+
+    </main>
+
+    <!-- ANÚNCIO RODAPÉ -->
+    <div class="w-full max-w-7xl mx-auto px-4 mb-8">
+        <div class="ad-space w-full h-[90px] md:h-[120px]">
+            <div>
+                <i class="fa-solid fa-ad text-2xl mb-1"></i>
+                <p class="text-xs md:text-sm">Espaço para Banner de Anúncio (Rodapé)</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="bg-white border-t border-gray-200 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 py-6 text-center text-gray-500 text-sm font-medium">
+            &copy; 2026 CheckIP Tool. Todos os direitos reservados. Ferramenta de diagnóstico de rede e sistema.
+        </div>
+    </footer>
+
+    <script>
+        // Variável global para armazenar o IP para a cópia
+        let currentIP = "";
+
+        // Função para copiar texto (Botão de IP)
+        function copyToClipboard(elementId) {
+            if (!currentIP) return;
+            const tempInput = document.createElement("input");
+            tempInput.value = currentIP;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
+            
+            // Feedback visual rápido
+            const btn = document.querySelector('button');
+            const originalHTML = btn.innerHTML;
+            btn.innerHTML = '<i class="fa-solid fa-check text-green-500"></i> Copiado!';
+            setTimeout(() => { btn.innerHTML = originalHTML; }, 2000);
+        }
+
+        // 1. Busca o IP usando uma API Pública gratuita e rápida
+        async function fetchUserIP() {
+            try {
+                const response = await fetch('https://api.ipify.org?format=json');
+                const data = await response.json();
+                currentIP = data.ip;
+                document.getElementById('ip-display').innerHTML = `<span id="ip-value">${data.ip}</span>`;
+            } catch (error) {
+                document.getElementById('ip-display').innerHTML = `<span class="text-red-300 text-2xl"><i class="fa-solid fa-triangle-exclamation"></i> Erro ao obter IP</span>`;
+            }
+        }
+
+        // 2. Geração de Fingerprint usando Canvas (Técnica avançada de hash no frontend)
+        function generateCanvasFingerprint() {
+            return new Promise((resolve) => {
+                try {
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+                    
+                    // Desenhar coisas complexas para forçar a engine gráfica do usuário
+                    ctx.textBaseline = 'top';
+                    ctx.font = '14px Arial';
+                    ctx.textBaseline = 'alphabetic';
+                    ctx.fillStyle = '#f60';
+                    ctx.fillRect(125, 1, 62, 20);
+                    ctx.fillStyle = '#069';
+                    ctx.fillText('Hello, user fingerprint!', 2, 15);
+                    ctx.fillStyle = 'rgba(102, 204, 0, 0.7)';
+                    ctx.fillText('Hello, user fingerprint!', 4, 17);
+                    
+                    const dataURL = canvas.toDataURL();
+                    
+                    // Função simples de Hash (MurmurHash-like)
+                    let hash = 0;
+                    for (let i = 0; i < dataURL.length; i++) {
+                        const char = dataURL.charCodeAt(i);
+                        hash = ((hash << 5) - hash) + char;
+                        hash = hash & hash; // Converte para integer de 32bit
+                    }
+                    
+                    // Adiciona dados do ambiente para fortalecer o hash
+                    const envData = navigator.language + screen.colorDepth + new Date().getTimezoneOffset();
+                    const finalHash = Math.abs(hash).toString(16) + btoa(envData).substring(0, 8);
+                    
+                    resolve(finalHash.toUpperCase());
+                } catch (e) {
+                    resolve("FINGERPRINT-UNAVAILABLE");
+                }
+            });
+        }
+
+        // 3. Analisa o User Agent para descobrir OS e Navegador
+        function parseUserAgent() {
+            const ua = navigator.userAgent;
+            let browser = "Desconhecido";
+            let browserIcon = "fa-globe";
+            let os = "Desconhecido";
+            let osIcon = "fa-laptop";
+
+            // Detectar OS
+            if (ua.indexOf("Win") !== -1) { os = "Windows"; osIcon = "fa-windows text-blue-500"; }
+            else if (ua.indexOf("Mac") !== -1) { os = "MacOS"; osIcon = "fa-apple text-gray-800"; }
+            else if (ua.indexOf("Linux") !== -1) { os = "Linux"; osIcon = "fa-linux text-yellow-600"; }
+            else if (ua.indexOf("Android") !== -1) { os = "Android"; osIcon = "fa-android text-green-500"; }
+            else if (ua.indexOf("like Mac") !== -1) { os = "iOS"; osIcon = "fa-apple text-gray-500"; }
+
+            // Detectar Navegador
+            if (ua.indexOf("Firefox") > -1) { browser = "Mozilla Firefox"; browserIcon = "fa-firefox text-orange-500"; }
+            else if (ua.indexOf("Opera") > -1 || ua.indexOf("OPR") > -1) { browser = "Opera"; browserIcon = "fa-opera text-red-500"; }
+            else if (ua.indexOf("Edg") > -1) { browser = "Microsoft Edge"; browserIcon = "fa-edge text-blue-600"; }
+            else if (ua.indexOf("Chrome") > -1) { browser = "Google Chrome"; browserIcon = "fa-chrome text-yellow-500"; }
+            else if (ua.indexOf("Safari") > -1) { browser = "Apple Safari"; browserIcon = "fa-safari text-blue-400"; }
+
+            return { browser, browserIcon, os, osIcon, raw: ua };
+        }
+
+        // 4. Inicializa e renderiza tudo
+        async function initApp() {
+            // Busca IP assíncrono
+            fetchUserIP();
+
+            // Pega dados do sistema e tela
+            const sysInfo = parseUserAgent();
+            const screenRes = `${window.screen.width} x ${window.screen.height}`;
+            const lang = navigator.language || navigator.userLanguage;
+
+            // Gera Fingerprint assíncrono
+            const fingerprint = await generateCanvasFingerprint();
+
+            // Atualiza a UI
+            document.getElementById('os-display').innerHTML = `<i class="fa-brands ${sysInfo.osIcon}"></i> ${sysInfo.os}`;
+            document.getElementById('browser-display').innerHTML = `<i class="fa-brands ${sysInfo.browserIcon}"></i> ${sysInfo.browser}`;
+            document.getElementById('screen-display').innerHTML = `<i class="fa-solid fa-desktop text-gray-500"></i> ${screenRes}`;
+            document.getElementById('lang-display').innerHTML = `<i class="fa-solid fa-language text-blue-400"></i> ${lang.toUpperCase()}`;
+            document.getElementById('ua-display').innerText = sysInfo.raw;
+            document.getElementById('fingerprint-display').innerHTML = fingerprint;
+        }
+
+        // Roda a aplicação quando a página carrega
+        window.onload = initApp;
+
+    </script>
+</body>
+</html>
